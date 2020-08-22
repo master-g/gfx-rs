@@ -4,7 +4,23 @@ version = "0.1.0"
 authors = ["mg <master-g@users.noreply.github.com>"]
 edition = "2018"
 
+[dependencies]
+cgmath = "0.17.0"
+image = "0.23.8"
+gl = "0.14.0"
+# only needed from chapter 3 on
+tobj = "2.0.2"
+num = "0.3.0"
+rand = "0.7.3"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies.glfw]
 git = "https://github.com/bjz/glfw-rs.git"
+# default-features = false
+
+[features]
+default = [
+    "chapter-1"
+]
+chapter-1 = []
