@@ -6,7 +6,7 @@ use std::sync::mpsc::Receiver;
 
 use glfw::{Key, Action};
 
-use image::GenericImageView;
+use image::{GenericImageView, DynamicImage};
 use image::DynamicImage::*;
 
 use crate::camera::Camera;
@@ -80,13 +80,7 @@ pub unsafe fn load_texture(path: &str) -> u32 {
 
     gl::GenTextures(1, &mut texture_id);
     let img = image::open(&Path::new(path)).expect("Texture failed to load");
-    let format = match img {
-        ImageLuma8(_) => gl::RED,
-        ImageLumaA8(_) => gl::RG,
-        ImageRgb8(_) => gl::RGB,
-        ImageRgba8(_) => gl::RGBA,
-        _ => gl::RGBA,
-    };
+    let format = image_format(&img);
 
     // let data = img.raw_pixels();
     let data = img.to_bytes();
@@ -102,4 +96,14 @@ pub unsafe fn load_texture(path: &str) -> u32 {
     gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::LINEAR as i32);
 
     texture_id
+}
+
+pub fn image_format(img: &DynamicImage) -> u32 {
+    match img {
+        ImageLuma8(_) => gl::RED,
+        ImageLumaA8(_) => gl::RG,
+        ImageRgb8(_) => gl::RGB,
+        ImageRgba8(_) => gl::RGBA,
+        _ => gl::RGBA,
+    }
 }

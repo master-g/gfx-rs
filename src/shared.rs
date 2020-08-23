@@ -14,6 +14,9 @@ pub mod mesh;
 
 pub use mesh::*;
 
+pub mod model;
+pub use model::*;
+
 pub mod shader;
 
 pub use shader::*;

@@ -83,7 +83,7 @@ impl Mesh {
         let mut height_nr = 0;
         for (i, texture) in self.textures.iter().enumerate() {
             gl::ActiveTexture(gl::TEXTURE0 + i as u32); // active proper texture unit before binding
-                                                        // retrieve texture number ( the N in diffuse_texture_n)
+            // retrieve texture number ( the N in diffuse_texture_n)
             let name = &texture.type_;
             let number = match name.as_str() {
                 "texture_diffuse" => {
