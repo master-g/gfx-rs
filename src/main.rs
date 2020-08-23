@@ -14,6 +14,8 @@ fn main() {
 
     match tutorial_id.as_str() {
         #[cfg(feature = "chapter-1")] "1_1_1" => main_1_1_1(),
+        #[cfg(feature = "chapter-1")] "1_1_2" => main_1_1_2(),
+        #[cfg(feature = "chapter-1")] "1_1_3" => main_1_1_3(),
 
         _ => println!("unknown tutorial id"),
     }
