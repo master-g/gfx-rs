@@ -31,7 +31,7 @@ const FRAGMENT_SHADER_SOURCE: &str = r#"
     }
 "#;
 
-pub fn main_1_1_3() {
+pub fn main_1_2_1() {
     // glfw: initialize and configure
     // ------------------------------
     let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
