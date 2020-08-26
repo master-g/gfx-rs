@@ -13,3 +13,7 @@ pub use _2_1_hello_triangle::*;
 pub mod _2_2_hello_triangle_indexed;
 
 pub use _2_2_hello_triangle_indexed::*;
+
+pub mod _2_3_hello_triangle_exercise1;
+
+pub use _2_3_hello_triangle_exercise1::*;
