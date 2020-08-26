@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 
-use std::sync::mpsc::Receiver;
 use std::ffi::CString;
 use std::ptr;
 use std::str;
 use std::mem;
 use std::os::raw::c_void;
 
-use glfw::{Context, Key, Action};
-
 use gl::types::*;
+use crate::tutorial::process_events;
+use crate::shared::check_compile_errors;
+use glfw::Context;
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -63,7 +63,7 @@ pub fn main_1_2_3() {
         gl::ShaderSource(vertex_shader, 1, &c_str_vert.as_ptr(), ptr::null());
         gl::CompileShader(vertex_shader);
         // check for shader compile error
-        check_shader_compile_errors(vertex_shader, "VERTEX");
+        check_compile_errors(vertex_shader, "VERTEX");
 
         // fragment shader
         let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
@@ -71,7 +71,7 @@ pub fn main_1_2_3() {
         gl::ShaderSource(fragment_shader, 1, &c_str_frag.as_ptr(), ptr::null());
         gl::CompileShader(fragment_shader);
         // check for shader compiel error
-        check_shader_compile_errors(fragment_shader, "FRAGMENT");
+        check_compile_errors(fragment_shader, "FRAGMENT");
 
         // link shaders
         let shader_program = gl::CreateProgram();
@@ -79,7 +79,7 @@ pub fn main_1_2_3() {
         gl::AttachShader(shader_program, fragment_shader);
         gl::LinkProgram(shader_program);
         // check for linking errors
-        check_shader_link_errors(shader_program);
+        check_compile_errors(shader_program, "PROGRAM");
         gl::DeleteShader(vertex_shader);
         gl::DeleteShader(fragment_shader);
 
@@ -148,42 +148,5 @@ pub fn main_1_2_3() {
         // -------------------------------------------------------------------------------
         window.swap_buffers();
         glfw.poll_events();
-    }
-}
-
-unsafe fn check_shader_compile_errors(shader: GLuint, type_: &str) {
-    let mut success = gl::FALSE as GLint;
-    let mut info_log = Vec::with_capacity(512);
-    info_log.set_len(512 - 1); // subtract 1 to skip the trailing null character
-    gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut success);
-    if success != gl::TRUE as GLint {
-        gl::GetShaderInfoLog(shader, 512, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-        println!("ERROR::SHADER::{}::COMPILATION_FAILED\n{}", type_, str::from_utf8(&info_log).unwrap());
-    }
-}
-
-unsafe fn check_shader_link_errors(program: GLuint) {
-    let mut success = gl::FALSE as GLint;
-    let mut info_log = Vec::with_capacity(512);
-    info_log.set_len(512 - 1); // subtract 1 to skip the trailing null character
-    gl::GetProgramiv(program, gl::LINK_STATUS, &mut success);
-    if success != gl::TRUE as GLint {
-        gl::GetProgramInfoLog(program, 512, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-        println!("ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n{}", str::from_utf8(&info_log).unwrap());
-    }
-}
-
-// NOTE: not the same version as in common.rs!
-fn process_events(window: &mut glfw::Window, events: &Receiver<(f64, glfw::WindowEvent)>) {
-    for (_, event) in glfw::flush_messages(events) {
-        match event {
-            glfw::WindowEvent::FramebufferSize(width, height) => {
-                // make sure the viewport matches the new window dimensions; note that width and
-                // height will be significantly larger than specified on retina displays.
-                unsafe { gl::Viewport(0, 0, width, height) }
-            }
-            glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
-            _ => {}
-        }
     }
 }

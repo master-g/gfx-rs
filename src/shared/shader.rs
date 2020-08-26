@@ -18,7 +18,6 @@ pub struct Shader {
 
 /// NOTE: mixture of `shader_s.h` and `shader_m.h` (the latter just contains
 /// a few more setters for uniforms)
-#[allow(dead_code)]
 impl Shader {
     pub fn new(vertex_path: &str, fragment_path: &str) -> Shader {
         let mut shader = Shader { id: 0 };
@@ -95,28 +94,7 @@ impl Shader {
     /// utility function for checking shader compilation/linking errors.
     /// ------------------------------------------------------------------------
     unsafe fn check_compile_errors(&self, shader: u32, type_: &str) {
-        let mut success = gl::FALSE as GLint;
-        let mut info_log = Vec::with_capacity(1024);
-        info_log.set_len(1024 - 1); // subtract 1 to skip the trailing null character
-        if type_ != "PROGRAM" {
-            gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut success);
-            if success != gl::TRUE as GLint {
-                gl::GetShaderInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-                println!("ERROR::SHADER_COMPILATION_ERROR of type: {}\n{}\n \
-                          -- --------------------------------------------------- -- ",
-                         type_,
-                         str::from_utf8(&info_log).unwrap());
-            }
-        } else {
-            gl::GetProgramiv(shader, gl::LINK_STATUS, &mut success);
-            if success != gl::TRUE as GLint {
-                gl::GetProgramInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-                println!("ERROR::PROGRAM_LINKING_ERROR of type: {}\n{}\n \
-                          -- --------------------------------------------------- -- ",
-                         type_,
-                         str::from_utf8(&info_log).unwrap());
-            }
-        }
+        check_compile_errors(shader, type_)
     }
 
     /// Only used in 4.9 Geometry shaders - ignore until then (shader.h in original C++)
@@ -182,4 +160,27 @@ impl Shader {
     }
 }
 
-
+pub unsafe fn check_compile_errors(shader: u32, type_: &str) {
+    let mut success = gl::FALSE as GLint;
+    let mut info_log = Vec::with_capacity(1024);
+    info_log.set_len(1024 - 1); // subtract 1 to skip the trailing null character
+    if type_ != "PROGRAM" {
+        gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut success);
+        if success != gl::TRUE as GLint {
+            gl::GetShaderInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
+            println!("ERROR::SHADER_COMPILATION_ERROR of type: {}\n{}\n \
+                          -- --------------------------------------------------- -- ",
+                     type_,
+                     str::from_utf8(&info_log).unwrap());
+        }
+    } else {
+        gl::GetProgramiv(shader, gl::LINK_STATUS, &mut success);
+        if success != gl::TRUE as GLint {
+            gl::GetProgramInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
+            println!("ERROR::PROGRAM_LINKING_ERROR of type: {}\n{}\n \
+                          -- --------------------------------------------------- -- ",
+                     type_,
+                     str::from_utf8(&info_log).unwrap());
+        }
+    }
+}
