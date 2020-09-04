@@ -1,16 +1,16 @@
 #![allow(dead_code)]
 
 use std::ffi::CString;
-use std::ptr;
-use std::str;
 use std::mem;
 use std::os::raw::c_void;
-
-use glfw::Context;
-use crate::tutorial::process_events;
+use std::ptr;
+use std::str;
 
 use gl::types::*;
+use glfw::Context;
+
 use crate::shared::check_compile_errors;
+use crate::tutorial::process_events;
 
 // settings
 const SCR_WIDTH: u32 = 800;

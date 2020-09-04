@@ -4,14 +4,12 @@ use std::os::raw::c_void;
 use std::path::Path;
 use std::sync::mpsc::Receiver;
 
-use glfw::{Key, Action};
-
-use image::{GenericImageView, DynamicImage};
+use glfw::{Action, Key};
+use image::{DynamicImage, GenericImageView};
 use image::DynamicImage::*;
 
 use crate::camera::Camera;
 use crate::camera::CameraMovement::*;
-
 
 /// Event processing function as introduced in 1.7.4 (Camera Class) and used in
 /// most later tutorials

@@ -1,8 +1,8 @@
-mod shared;
-mod tutorial;
-
 use shared::*;
 use tutorial::*;
+
+mod shared;
+mod tutorial;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -18,6 +18,8 @@ fn main() {
         #[cfg(feature = "chapter-1")] "1_2_1" => main_1_2_1(),
         #[cfg(feature = "chapter-1")] "1_2_2" => main_1_2_2(),
         #[cfg(feature = "chapter-1")] "1_2_3" => main_1_2_3(),
+        #[cfg(feature = "chapter-1")] "1_2_4" => main_1_2_4(),
+        #[cfg(feature = "chapter-1")] "1_2_5" => main_1_2_5(),
 
         _ => println!("unknown tutorial id"),
     }

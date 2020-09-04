@@ -5,8 +5,8 @@ use std::mem::size_of;
 use std::os::raw::c_void;
 use std::ptr;
 
-use cgmath::prelude::*;
 use cgmath::{Vector2, Vector3};
+use cgmath::prelude::*;
 
 use crate::shared::Shader;
 

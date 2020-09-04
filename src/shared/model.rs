@@ -3,10 +3,10 @@
 use std::os::raw::c_void;
 use std::path::Path;
 
-use crate::shared::{Mesh, Texture, Shader, Vertex, image_format};
-
-use cgmath::{vec3, vec2};
+use cgmath::{vec2, vec3};
 use image::GenericImageView;
+
+use crate::shared::{image_format, Mesh, Shader, Texture, Vertex};
 
 #[derive(Default)]
 pub struct Model {

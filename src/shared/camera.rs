@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
-use cgmath::vec3;
 use cgmath::prelude::*;
+use cgmath::vec3;
 
 type Point3 = cgmath::Point3<f32>;
 type Vector3 = cgmath::Vector3<f32>;

@@ -1,16 +1,15 @@
 #![allow(dead_code)]
 
+use std::ffi::{CStr, CString};
 use std::fs::File;
 use std::io::Read;
-use std::ffi::{CString, CStr};
 use std::ptr;
 use std::str;
 
+use cgmath::{Matrix4, Vector3};
+use cgmath::prelude::*;
 use gl;
 use gl::types::*;
-
-use cgmath::{Vector3, Matrix4};
-use cgmath::prelude::*;
 
 pub struct Shader {
     pub id: u32,
