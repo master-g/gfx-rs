@@ -2,7 +2,6 @@
 
 use std::str;
 
-use gl::types::*;
 use glfw::Context;
 
 use crate::tutorial::{process_events, TutorialShader, TutorialTriangle};
@@ -57,17 +56,16 @@ pub fn main_1_2_5() {
     // ---------------------------------------
     gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
 
-    // shader program
     let (s1, s2, t1, t2) = unsafe {
         let s1 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_1);
         let s2 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_2);
 
-        let t1 = TutorialTriangle::new([
+        let t1 = TutorialTriangle::new_xyz(vec![
             -1.0, -0.5, 0.0,
             0.0, -0.5, 0.0,
             -0.5, 0.5, 0.0,
         ]);
-        let t2 = TutorialTriangle::new([
+        let t2 = TutorialTriangle::new_xyz(vec![
             0.0, -0.5, 0.0,
             1.0, -0.5, 0.0,
             0.5, 0.5, 0.0,
