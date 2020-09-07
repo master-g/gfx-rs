@@ -12,6 +12,11 @@ pub use _4_1_textures::*;
 pub use _4_2_texture_combined::*;
 pub use _5_1_transformation::*;
 pub use _6_1_coordinate_systems::*;
+pub use _6_2_coordinate_systems_depth::*;
+pub use _6_3_coordinate_systems_multiple::*;
+pub use _7_1_camera_circle::*;
+pub use _7_2_camera_keyboard_dt::*;
+pub use _7_3_camera_mouse_zoom::*;
 pub use common::*;
 
 pub mod common;
@@ -43,3 +48,13 @@ pub mod _4_2_texture_combined;
 pub mod _5_1_transformation;
 
 pub mod _6_1_coordinate_systems;
+
+pub mod _6_2_coordinate_systems_depth;
+
+pub mod _6_3_coordinate_systems_multiple;
+
+pub mod _7_1_camera_circle;
+
+pub mod _7_2_camera_keyboard_dt;
+
+pub mod _7_3_camera_mouse_zoom;

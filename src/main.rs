@@ -27,6 +27,11 @@ fn main() {
         #[cfg(feature = "chapter-1")] "1_4_2" => main_1_4_2(),
         #[cfg(feature = "chapter-1")] "1_5_1" => main_1_5_1(),
         #[cfg(feature = "chapter-1")] "1_6_1" => main_1_6_1(),
+        #[cfg(feature = "chapter-1")] "1_6_2" => main_1_6_2(),
+        #[cfg(feature = "chapter-1")] "1_6_3" => main_1_6_3(),
+        #[cfg(feature = "chapter-1")] "1_7_1" => main_1_7_1(),
+        #[cfg(feature = "chapter-1")] "1_7_2" => main_1_7_2(),
+        #[cfg(feature = "chapter-1")] "1_7_3" => main_1_7_3(),
 
         _ => println!("unknown tutorial id"),
     }

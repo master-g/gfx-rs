@@ -104,6 +104,44 @@ impl TutorialTriangle {
         }
     }
 
+    pub unsafe fn new_xyzuv(vertices: Vec<f32>) -> Self {
+        let mut vao: u32 = 0;
+        let mut vbo: u32 = 0;
+        gl::GenVertexArrays(1, &mut vao);
+        gl::GenBuffers(1, &mut vbo);
+
+        // 1. bind the Vertex Array Object
+        gl::BindVertexArray(vao);
+        // 2. bind and set vertex buffer(s)
+        gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
+        gl::BufferData(gl::ARRAY_BUFFER,
+                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+                       &vertices[0] as *const f32 as *const c_void,
+                       gl::STATIC_DRAW);
+        // 3. configure vertex attributes(s).
+        let stride = 5 * mem::size_of::<GLfloat>() as GLsizei;
+        // position
+        gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
+        gl::EnableVertexAttribArray(0);
+        // texture coordinates
+        gl::VertexAttribPointer(1, 2, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::EnableVertexAttribArray(1);
+
+        // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+        gl::BindBuffer(gl::ARRAY_BUFFER, 0);
+
+        // You can unbind the VAO afterwards so other vao calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+        // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+        gl::BindVertexArray(0);
+
+        Self {
+            vao,
+            vbo,
+            ebo: 0,
+            elements: (vertices.len() / 5) as i32,
+        }
+    }
+
     pub unsafe fn new_xyzrgbuv_indices(vertices: Vec<f32>, indices: Vec<i32>) -> Self {
         let mut vao: u32 = 0;
         let mut vbo: u32 = 0;
