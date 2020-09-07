@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::{mem, ptr};
 use std::ffi::CString;
 use std::os::raw::c_void;
@@ -25,14 +27,15 @@ pub fn process_events(window: &mut glfw::Window, events: &Receiver<(f64, glfw::W
     }
 }
 
-pub struct TutorialTriangle {
+pub struct TutorialGeometry {
     vao: u32,
     vbo: u32,
     ebo: u32,
     elements: i32,
+    primitive: u32,
 }
 
-impl TutorialTriangle {
+impl TutorialGeometry {
     pub unsafe fn new_xyz(vertices: Vec<f32>) -> Self {
         let mut vao: u32 = 0;
         let mut vbo: u32 = 0;
@@ -63,6 +66,7 @@ impl TutorialTriangle {
             vbo,
             ebo: 0,
             elements: (vertices.len() / 3) as i32,
+            primitive: gl::TRIANGLES,
         }
     }
 
@@ -85,7 +89,7 @@ impl TutorialTriangle {
         // position
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
-        // color
+        // color / normal
         gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
 
@@ -101,6 +105,7 @@ impl TutorialTriangle {
             vbo,
             ebo: 0,
             elements: (vertices.len() / 6) as i32,
+            primitive: gl::TRIANGLES,
         }
     }
 
@@ -139,6 +144,7 @@ impl TutorialTriangle {
             vbo,
             ebo: 0,
             elements: (vertices.len() / 5) as i32,
+            primitive: gl::TRIANGLES,
         }
     }
 
@@ -189,20 +195,25 @@ impl TutorialTriangle {
             vbo,
             ebo,
             elements: indices.len() as i32,
+            primitive: gl::TRIANGLES,
         }
+    }
+
+    pub unsafe fn set_primitive(&mut self, primitive: u32) {
+        self.primitive = primitive;
     }
 
     pub unsafe fn draw(&self) {
         gl::BindVertexArray(self.vao);
         if self.ebo != 0 {
-            gl::DrawElements(gl::TRIANGLES, self.elements, gl::UNSIGNED_INT, ptr::null());
+            gl::DrawElements(self.primitive, self.elements, gl::UNSIGNED_INT, ptr::null());
         } else {
-            gl::DrawArrays(gl::TRIANGLES, 0, self.elements);
+            gl::DrawArrays(self.primitive, 0, self.elements);
         }
     }
 }
 
-impl Drop for TutorialTriangle {
+impl Drop for TutorialGeometry {
     fn drop(&mut self) {
         unsafe {
             gl::DeleteVertexArrays(1, &self.vao);

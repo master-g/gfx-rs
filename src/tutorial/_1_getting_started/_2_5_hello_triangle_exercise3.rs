@@ -4,7 +4,7 @@ use std::str;
 
 use glfw::Context;
 
-use crate::tutorial::{process_events, TutorialShader, TutorialTriangle};
+use crate::tutorial::{process_events, TutorialShader, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -60,12 +60,12 @@ pub fn main_1_2_5() {
         let s1 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_1);
         let s2 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_2);
 
-        let t1 = TutorialTriangle::new_xyz(vec![
+        let t1 = TutorialGeometry::new_xyz(vec![
             -1.0, -0.5, 0.0,
             0.0, -0.5, 0.0,
             -0.5, 0.5, 0.0,
         ]);
-        let t2 = TutorialTriangle::new_xyz(vec![
+        let t2 = TutorialGeometry::new_xyz(vec![
             0.0, -0.5, 0.0,
             1.0, -0.5, 0.0,
             0.5, 0.5, 0.0,

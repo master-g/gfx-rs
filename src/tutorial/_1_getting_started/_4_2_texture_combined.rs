@@ -6,7 +6,7 @@ use glfw::Context;
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{process_events, TutorialTexture, TutorialTriangle};
+use crate::tutorial::{process_events, TutorialTexture, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -40,7 +40,7 @@ pub fn main_1_4_2() {
             "src/tutorial/_1_getting_started/shaders/4.2.texture.fsh",
         );
 
-        let triangle = TutorialTriangle::new_xyzrgbuv_indices(vec![
+        let triangle = TutorialGeometry::new_xyzrgbuv_indices(vec![
             // positions       // colors        // texture coords
             0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // top right
             0.5, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, // bottom right

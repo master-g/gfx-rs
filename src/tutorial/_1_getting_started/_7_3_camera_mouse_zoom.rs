@@ -8,7 +8,7 @@ use glfw::{Action, Context, Key};
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{TutorialTexture, TutorialTriangle};
+use crate::tutorial::{TutorialTexture, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -72,7 +72,7 @@ pub fn main_1_7_3() {
             "src/tutorial/_1_getting_started/shaders/7.3.camera.fsh",
         );
 
-        let geometry = TutorialTriangle::new_xyzuv(vec![
+        let geometry = TutorialGeometry::new_xyzuv(vec![
             //
             -0.5, -0.5, -0.5, 0.0, 0.0,
             0.5, -0.5, -0.5, 1.0, 0.0,

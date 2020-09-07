@@ -3,7 +3,7 @@
 use glfw::Context;
 
 use crate::shared::Shader;
-use crate::tutorial::{process_events, TutorialTriangle};
+use crate::tutorial::{process_events, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -37,7 +37,7 @@ pub fn main_1_3_3() {
             "src/tutorial/_1_getting_started/shaders/3.3.shader.fsh",
         );
 
-        let triangle = TutorialTriangle::new_xyzrgb(vec![
+        let triangle = TutorialGeometry::new_xyzrgb(vec![
             // positions  // colors
             0.5, -0.5, 0.0, 1.0, 0.0, 0.0, // bottom right
             -0.5, -0.5, 0.0, 0.0, 1.0, 0.0, // bottom left

@@ -1,34 +1,28 @@
 #![allow(dead_code)]
 
 use std::ffi::CStr;
-use std::sync::mpsc::Receiver;
 
 use cgmath::{Deg, InnerSpace, Matrix, Matrix4, perspective, Point3, vec3, Vector3};
-use glfw::{Action, Context, Key};
+use glfw::Context;
 
 use crate::c_str;
-use crate::shared::Shader;
+use crate::shared::{Camera, process_events, process_input, Shader};
 use crate::tutorial::{TutorialTexture, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
-// camera
-const CAMERA_FRONT: Vector3<f32> = Vector3 {
-    x: 0.0,
-    y: 0.0,
-    z: -1.0,
-};
+pub fn main_1_7_4() {
+    let mut camera = Camera {
+        position: Point3::new(0.0, 0.0, 3.0),
+        ..Camera::default()
+    };
 
-const CAMERA_UP: Vector3<f32> = Vector3 {
-    x: 0.0,
-    y: 1.0,
-    z: 0.0,
-};
+    let mut first_mouse = true;
+    let mut last_x: f32 = SCR_WIDTH as f32 / 2.0;
+    let mut last_y: f32 = SCR_HEIGHT as f32 / 2.0;
 
-pub fn main_1_7_2() {
-    let mut camera_pos = Point3::new(0.0, 0.0, 3.0);
     let mut delta_time: f32;
     let mut last_frame: f32 = 0.0;
 
@@ -48,17 +42,22 @@ pub fn main_1_7_2() {
     window.make_current();
     window.set_key_polling(true);
     window.set_framebuffer_size_polling(true);
+    window.set_cursor_pos_polling(true);
+    window.set_scroll_polling(true);
+
+    // tell GLFW to capture our mouse
+    window.set_cursor_mode(glfw::CursorMode::Disabled);
 
     // gl: load all OpenGL function pointers
     // ---------------------------------------
     gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
 
-    let (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view) = unsafe {
+    let (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj) = unsafe {
         gl::Enable(gl::DEPTH_TEST);
 
         let shader = Shader::new(
-            "src/tutorial/_1_getting_started/shaders/7.2.camera.vsh",
-            "src/tutorial/_1_getting_started/shaders/7.2.camera.fsh",
+            "src/tutorial/_1_getting_started/shaders/7.3.camera.vsh",
+            "src/tutorial/_1_getting_started/shaders/7.3.camera.fsh",
         );
 
         let geometry = TutorialGeometry::new_xyzuv(vec![
@@ -136,10 +135,8 @@ pub fn main_1_7_2() {
         let loc_model = gl::GetUniformLocation(shader.id, c_str!("model").as_ptr());
         let loc_view = gl::GetUniformLocation(shader.id, c_str!("view").as_ptr());
         let loc_proj = gl::GetUniformLocation(shader.id, c_str!("projection").as_ptr());
-        let projection: Matrix4<f32> = perspective(Deg(45.0), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
-        gl::UniformMatrix4fv(loc_proj, 1, gl::FALSE, projection.as_ptr());
 
-        (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view)
+        (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj)
     };
 
     // render loop
@@ -153,11 +150,16 @@ pub fn main_1_7_2() {
 
         // events
         // -----
-        process_events_no_input(&events);
+        process_events(&events,
+                       &mut first_mouse,
+                       &mut last_x,
+                       &mut last_y,
+                       &mut camera,
+        );
 
         // input
         // -----
-        _process_input(&mut window, delta_time, &mut camera_pos);
+        process_input(&mut window, delta_time, &mut camera);
 
         // render
         // ------
@@ -170,8 +172,12 @@ pub fn main_1_7_2() {
 
             shader.use_program();
 
+            // projection matrix
+            let projection: Matrix4<f32> = perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
+            gl::UniformMatrix4fv(loc_proj, 1, gl::FALSE, projection.as_ptr());
+
             // camera/view transformation
-            let view: Matrix4<f32> = Matrix4::look_at(camera_pos, camera_pos + CAMERA_FRONT, CAMERA_UP);
+            let view = camera.get_view_matrix();
             gl::UniformMatrix4fv(loc_view, 1, gl::FALSE, &view[0][0]);
 
             for (i, position) in cube_pos.iter().enumerate() {
@@ -188,38 +194,5 @@ pub fn main_1_7_2() {
         // -------------------------------------------------------------------------------
         window.swap_buffers();
         glfw.poll_events();
-    }
-}
-
-fn process_events_no_input(events: &Receiver<(f64, glfw::WindowEvent)>) {
-    for (_, event) in glfw::flush_messages(events) {
-        match event {
-            glfw::WindowEvent::FramebufferSize(width, height) => {
-                // make sure the viewport matches the new window dimensions; note that width and
-                // height will be significantly larger than specified on retina displays.
-                unsafe { gl::Viewport(0, 0, width, height) }
-            }
-            _ => {}
-        }
-    }
-}
-
-fn _process_input(window: &mut glfw::Window, delta_time: f32, camera_pos: &mut Point3<f32>) {
-    if window.get_key(Key::Escape) == Action::Press {
-        window.set_should_close(true);
-    }
-
-    let camera_speed = 2.5 * delta_time;
-    if window.get_key(Key::W) == Action::Press {
-        *camera_pos += camera_speed * CAMERA_FRONT;
-    }
-    if window.get_key(Key::S) == Action::Press {
-        *camera_pos += -(camera_speed * CAMERA_FRONT);
-    }
-    if window.get_key(Key::A) == Action::Press {
-        *camera_pos += -(CAMERA_FRONT.cross(CAMERA_UP).normalize() * camera_speed);
-    }
-    if window.get_key(Key::D) == Action::Press {
-        *camera_pos += CAMERA_FRONT.cross(CAMERA_UP).normalize() * camera_speed;
     }
 }

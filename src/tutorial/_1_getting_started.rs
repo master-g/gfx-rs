@@ -17,9 +17,7 @@ pub use _6_3_coordinate_systems_multiple::*;
 pub use _7_1_camera_circle::*;
 pub use _7_2_camera_keyboard_dt::*;
 pub use _7_3_camera_mouse_zoom::*;
-pub use common::*;
-
-pub mod common;
+pub use _7_4_camera_class::*;
 
 pub mod _1_1_hello_window;
 
@@ -58,3 +56,5 @@ pub mod _7_1_camera_circle;
 pub mod _7_2_camera_keyboard_dt;
 
 pub mod _7_3_camera_mouse_zoom;
+
+pub mod _7_4_camera_class;

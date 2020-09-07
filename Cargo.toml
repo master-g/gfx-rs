@@ -21,6 +21,8 @@ git = "https://github.com/bjz/glfw-rs.git"
 
 [features]
 default = [
-    "chapter-1"
+    "chapter-1",
+    "chapter-2"
 ]
 chapter-1 = []
+chapter-2 = []

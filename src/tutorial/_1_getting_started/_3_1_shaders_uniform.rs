@@ -4,7 +4,7 @@ use std::str;
 
 use glfw::Context;
 
-use crate::tutorial::{process_events, TutorialShader, TutorialTriangle};
+use crate::tutorial::{process_events, TutorialShader, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -54,7 +54,7 @@ pub fn main_1_3_1() {
         shader.use_prog();
         let location = shader.get_location("ourColor");
 
-        let triangle = TutorialTriangle::new_xyz(vec![
+        let triangle = TutorialGeometry::new_xyz(vec![
             -0.5, -0.5, 0.0,
             0.5, -0.5, 0.0,
             0.0, 0.5, 0.0,

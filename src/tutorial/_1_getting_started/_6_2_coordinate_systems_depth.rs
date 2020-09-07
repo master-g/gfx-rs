@@ -7,7 +7,7 @@ use glfw::Context;
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{process_events, TutorialTexture, TutorialTriangle};
+use crate::tutorial::{process_events, TutorialTexture, TutorialGeometry};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -43,7 +43,7 @@ pub fn main_1_6_2() {
             "src/tutorial/_1_getting_started/shaders/6.2.coordinate_systems.fsh",
         );
 
-        let geometry = TutorialTriangle::new_xyzuv(vec![
+        let geometry = TutorialGeometry::new_xyzuv(vec![
             //
             -0.5, -0.5, -0.5, 0.0, 0.0,
             0.5, -0.5, -0.5, 1.0, 0.0,
