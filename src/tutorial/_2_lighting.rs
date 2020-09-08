@@ -1,5 +1,23 @@
 pub use _1_colors::*;
 pub use _2_1_basic_lighting_diffuse::*;
+pub use _2_2_basic_lighting_specular::*;
+pub use _3_1_materials::*;
+pub use _4_1_lighting_maps_diffuse_map::*;
+pub use _4_2_lighting_maps_specular_map::*;
+pub use _5_1_lighting_casters_directional::*;
+pub use _5_2_lighting_casters_point::*;
+pub use _5_3_light_casters_spot::*;
+pub use _5_4_light_casters_spot_soft::*;
+pub use _6_multiple_lights::*;
 
 pub mod _1_colors;
 pub mod _2_1_basic_lighting_diffuse;
+pub mod _2_2_basic_lighting_specular;
+pub mod _3_1_materials;
+pub mod _4_1_lighting_maps_diffuse_map;
+pub mod _4_2_lighting_maps_specular_map;
+pub mod _5_1_lighting_casters_directional;
+pub mod _5_2_lighting_casters_point;
+pub mod _5_3_light_casters_spot;
+pub mod _5_4_light_casters_spot_soft;
+pub mod _6_multiple_lights;
