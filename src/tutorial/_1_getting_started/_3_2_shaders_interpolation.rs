@@ -37,11 +37,12 @@ pub fn main_1_3_2() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -59,7 +60,7 @@ pub fn main_1_3_2() {
             // positions  // colors
             0.5, -0.5, 0.0, 1.0, 0.0, 0.0, // bottom right
             -0.5, -0.5, 0.0, 0.0, 1.0, 0.0, // bottom left
-            0.0, 0.5, 0.0, 0.0, 0.0, 1.0  // top
+            0.0, 0.5, 0.0, 0.0, 0.0, 1.0, // top
         ]);
 
         // gl::PolygonMode(gl::FRONT_AND_BACK, gl::LINE);

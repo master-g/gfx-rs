@@ -19,11 +19,12 @@ pub fn main_1_4_2() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -40,16 +41,19 @@ pub fn main_1_4_2() {
             "src/tutorial/_1_getting_started/shaders/4.2.texture.fsh",
         );
 
-        let triangle = TutorialGeometry::new_xyzrgbuv_indices(vec![
-            // positions       // colors        // texture coords
-            0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // top right
-            0.5, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, // bottom right
-            -0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, // bottom left
-            -0.5, 0.5, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0  // top left
-        ], vec![
-            0, 1, 3, // first Triangle
-            1, 2, 3 // second Triangle
-        ]);
+        let triangle = TutorialGeometry::new_xyzrgbuv_indices(
+            vec![
+                // positions       // colors        // texture coords
+                0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, // top right
+                0.5, -0.5, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, // bottom right
+                -0.5, -0.5, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, // bottom left
+                -0.5, 0.5, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, // top left
+            ],
+            vec![
+                0, 1, 3, // first Triangle
+                1, 2, 3, // second Triangle
+            ],
+        );
 
         // texture
         let texture1 = TutorialTexture::new("resources/textures/container.jpg", 0, false, false, false);

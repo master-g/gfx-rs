@@ -41,11 +41,12 @@ pub fn main_1_2_5() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -60,16 +61,8 @@ pub fn main_1_2_5() {
         let s1 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_1);
         let s2 = TutorialShader::new(VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE_2);
 
-        let t1 = TutorialGeometry::new_xyz(vec![
-            -1.0, -0.5, 0.0,
-            0.0, -0.5, 0.0,
-            -0.5, 0.5, 0.0,
-        ]);
-        let t2 = TutorialGeometry::new_xyz(vec![
-            0.0, -0.5, 0.0,
-            1.0, -0.5, 0.0,
-            0.5, 0.5, 0.0,
-        ]);
+        let t1 = TutorialGeometry::new_xyz(vec![-1.0, -0.5, 0.0, 0.0, -0.5, 0.0, -0.5, 0.5, 0.0]);
+        let t2 = TutorialGeometry::new_xyz(vec![0.0, -0.5, 0.0, 1.0, -0.5, 0.0, 0.5, 0.5, 0.0]);
 
         // gl::PolygonMode(gl::FRONT_AND_BACK, gl::LINE);
 

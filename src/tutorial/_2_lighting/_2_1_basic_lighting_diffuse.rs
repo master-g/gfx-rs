@@ -38,11 +38,12 @@ pub fn main_2_2_1() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -58,13 +59,7 @@ pub fn main_2_2_1() {
     // ---------------------------------------
     gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
 
-    let (
-        light_shader,
-        lamp_shader,
-        vbo,
-        cube_vao,
-        light_vao,
-    ) = unsafe {
+    let (light_shader, lamp_shader, vbo, cube_vao, light_vao) = unsafe {
         // configure global opengl state
         gl::Enable(gl::DEPTH_TEST);
 
@@ -82,47 +77,18 @@ pub fn main_2_2_1() {
         // setup vertex data
         // -----------------
         let vertices: [f32; 216] = [
-            -0.5, -0.5, -0.5, 0.0, 0.0, -1.0,
-            0.5, -0.5, -0.5, 0.0, 0.0, -1.0,
-            0.5, 0.5, -0.5, 0.0, 0.0, -1.0,
-            0.5, 0.5, -0.5, 0.0, 0.0, -1.0,
-            -0.5, 0.5, -0.5, 0.0, 0.0, -1.0,
-            -0.5, -0.5, -0.5, 0.0, 0.0, -1.0,
-            //
-            -0.5, -0.5, 0.5, 0.0, 0.0, 1.0,
-            0.5, -0.5, 0.5, 0.0, 0.0, 1.0,
-            0.5, 0.5, 0.5, 0.0, 0.0, 1.0,
-            0.5, 0.5, 0.5, 0.0, 0.0, 1.0,
-            -0.5, 0.5, 0.5, 0.0, 0.0, 1.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0, 1.0,
-            //
-            -0.5, 0.5, 0.5, -1.0, 0.0, 0.0,
-            -0.5, 0.5, -0.5, -1.0, 0.0, 0.0,
-            -0.5, -0.5, -0.5, -1.0, 0.0, 0.0,
-            -0.5, -0.5, -0.5, -1.0, 0.0, 0.0,
-            -0.5, -0.5, 0.5, -1.0, 0.0, 0.0,
-            -0.5, 0.5, 0.5, -1.0, 0.0, 0.0,
-            //
-            0.5, 0.5, 0.5, 1.0, 0.0, 0.0,
-            0.5, 0.5, -0.5, 1.0, 0.0, 0.0,
-            0.5, -0.5, -0.5, 1.0, 0.0, 0.0,
-            0.5, -0.5, -0.5, 1.0, 0.0, 0.0,
-            0.5, -0.5, 0.5, 1.0, 0.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 0.0, 0.0,
-            //
-            -0.5, -0.5, -0.5, 0.0, -1.0, 0.0,
-            0.5, -0.5, -0.5, 0.0, -1.0, 0.0,
-            0.5, -0.5, 0.5, 0.0, -1.0, 0.0,
-            0.5, -0.5, 0.5, 0.0, -1.0, 0.0,
-            -0.5, -0.5, 0.5, 0.0, -1.0, 0.0,
-            -0.5, -0.5, -0.5, 0.0, -1.0, 0.0,
-            //
-            -0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
-            0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
-            0.5, 0.5, 0.5, 0.0, 1.0, 0.0,
-            0.5, 0.5, 0.5, 0.0, 1.0, 0.0,
-            -0.5, 0.5, 0.5, 0.0, 1.0, 0.0,
-            -0.5, 0.5, -0.5, 0.0, 1.0, 0.0
+            -0.5, -0.5, -0.5, 0.0, 0.0, -1.0, 0.5, -0.5, -0.5, 0.0, 0.0, -1.0, 0.5, 0.5, -0.5, 0.0, 0.0, -1.0, 0.5,
+            0.5, -0.5, 0.0, 0.0, -1.0, -0.5, 0.5, -0.5, 0.0, 0.0, -1.0, -0.5, -0.5, -0.5, 0.0, 0.0, -1.0, //
+            -0.5, -0.5, 0.5, 0.0, 0.0, 1.0, 0.5, -0.5, 0.5, 0.0, 0.0, 1.0, 0.5, 0.5, 0.5, 0.0, 0.0, 1.0, 0.5, 0.5, 0.5,
+            0.0, 0.0, 1.0, -0.5, 0.5, 0.5, 0.0, 0.0, 1.0, -0.5, -0.5, 0.5, 0.0, 0.0, 1.0, //
+            -0.5, 0.5, 0.5, -1.0, 0.0, 0.0, -0.5, 0.5, -0.5, -1.0, 0.0, 0.0, -0.5, -0.5, -0.5, -1.0, 0.0, 0.0, -0.5,
+            -0.5, -0.5, -1.0, 0.0, 0.0, -0.5, -0.5, 0.5, -1.0, 0.0, 0.0, -0.5, 0.5, 0.5, -1.0, 0.0, 0.0, //
+            0.5, 0.5, 0.5, 1.0, 0.0, 0.0, 0.5, 0.5, -0.5, 1.0, 0.0, 0.0, 0.5, -0.5, -0.5, 1.0, 0.0, 0.0, 0.5, -0.5,
+            -0.5, 1.0, 0.0, 0.0, 0.5, -0.5, 0.5, 1.0, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.0, 0.0, //
+            -0.5, -0.5, -0.5, 0.0, -1.0, 0.0, 0.5, -0.5, -0.5, 0.0, -1.0, 0.0, 0.5, -0.5, 0.5, 0.0, -1.0, 0.0, 0.5,
+            -0.5, 0.5, 0.0, -1.0, 0.0, -0.5, -0.5, 0.5, 0.0, -1.0, 0.0, -0.5, -0.5, -0.5, 0.0, -1.0, 0.0, //
+            -0.5, 0.5, -0.5, 0.0, 1.0, 0.0, 0.5, 0.5, -0.5, 0.0, 1.0, 0.0, 0.5, 0.5, 0.5, 0.0, 1.0, 0.0, 0.5, 0.5, 0.5,
+            0.0, 1.0, 0.0, -0.5, 0.5, 0.5, 0.0, 1.0, 0.0, -0.5, 0.5, -0.5, 0.0, 1.0, 0.0,
         ];
 
         let (mut vbo, mut cube_vao) = (0, 0);
@@ -132,19 +98,27 @@ pub fn main_2_2_1() {
         gl::BindVertexArray(cube_vao);
 
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-        gl::BufferData(gl::ARRAY_BUFFER,
-                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &vertices[0] as *const f32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ARRAY_BUFFER,
+            (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &vertices[0] as *const f32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
 
         let stride = 6 * mem::size_of::<GLfloat>() as GLsizei;
         // position attribute
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // normal attribute
-        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::VertexAttribPointer(
+            1,
+            3,
+            gl::FLOAT,
+            gl::FALSE,
+            stride,
+            (3 * mem::size_of::<GLfloat>()) as *const c_void,
+        );
         gl::EnableVertexAttribArray(1);
-
 
         let mut light_vao = 0;
         gl::GenVertexArrays(1, &mut light_vao);
@@ -169,12 +143,7 @@ pub fn main_2_2_1() {
 
         // events
         // -----
-        process_events(&events,
-                       &mut first_mouse,
-                       &mut last_x,
-                       &mut last_y,
-                       &mut camera,
-        );
+        process_events(&events, &mut first_mouse, &mut last_x, &mut last_y, &mut camera);
 
         // input
         // -----
@@ -192,7 +161,8 @@ pub fn main_2_2_1() {
             light_shader.set_vector3(c_str!("lightPos"), &light_pos);
 
             // view/projection matrix
-            let projection: Matrix4<f32> = perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
+            let projection: Matrix4<f32> =
+                perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
             let view = camera.get_view_matrix();
             light_shader.set_mat4(c_str!("projection"), &projection);
             light_shader.set_mat4(c_str!("view"), &view);

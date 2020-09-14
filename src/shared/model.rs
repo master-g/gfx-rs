@@ -27,7 +27,9 @@ impl Model {
 
     pub fn draw(&self, shader: &Shader) {
         for mesh in &self.meshes {
-            unsafe { mesh.draw(shader); }
+            unsafe {
+                mesh.draw(shader);
+            }
         }
     }
 
@@ -116,7 +118,17 @@ unsafe fn texture_from_file(path: &str, directory: &str) -> u32 {
     let data = img.to_bytes();
 
     gl::BindTexture(gl::TEXTURE_2D, texture_id);
-    gl::TexImage2D(gl::TEXTURE_2D, 0, format as i32, img.width() as i32, img.height() as i32, 0, format, gl::UNSIGNED_BYTE, &data[0] as *const u8 as *const c_void);
+    gl::TexImage2D(
+        gl::TEXTURE_2D,
+        0,
+        format as i32,
+        img.width() as i32,
+        img.height() as i32,
+        0,
+        format,
+        gl::UNSIGNED_BYTE,
+        &data[0] as *const u8 as *const c_void,
+    );
     gl::GenerateMipmap(gl::TEXTURE_2D);
 
     gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::REPEAT as i32);

@@ -32,11 +32,12 @@ pub fn main_1_7_4() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -62,52 +63,18 @@ pub fn main_1_7_4() {
 
         let geometry = TutorialGeometry::new_xyzuv(vec![
             //
-            -0.5, -0.5, -0.5, 0.0, 0.0,
-            0.5, -0.5, -0.5, 1.0, 0.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            -0.5, 0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 0.0,
-
-            //
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 1.0,
-            0.5, 0.5, 0.5, 1.0, 1.0,
-            -0.5, 0.5, 0.5, 0.0, 1.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-
-            //
-            -0.5, 0.5, 0.5, 1.0, 0.0,
-            -0.5, 0.5, -0.5, 1.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            -0.5, 0.5, 0.5, 1.0, 0.0,
-
-            //
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, 0.5, 0.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-
-            //
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, -0.5, 1.0, 1.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-
-            //
-            -0.5, 0.5, -0.5, 0.0, 1.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            -0.5, 0.5, 0.5, 0.0, 0.0,
-            -0.5, 0.5, -0.5, 0.0, 1.0
+            -0.5, -0.5, -0.5, 0.0, 0.0, 0.5, -0.5, -0.5, 1.0, 0.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, 0.5, -0.5, 1.0, 1.0,
+            -0.5, 0.5, -0.5, 0.0, 1.0, -0.5, -0.5, -0.5, 0.0, 0.0, //
+            -0.5, -0.5, 0.5, 0.0, 0.0, 0.5, -0.5, 0.5, 1.0, 0.0, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5, 0.5, 0.5, 1.0, 1.0,
+            -0.5, 0.5, 0.5, 0.0, 1.0, -0.5, -0.5, 0.5, 0.0, 0.0, //
+            -0.5, 0.5, 0.5, 1.0, 0.0, -0.5, 0.5, -0.5, 1.0, 1.0, -0.5, -0.5, -0.5, 0.0, 1.0, -0.5, -0.5, -0.5, 0.0,
+            1.0, -0.5, -0.5, 0.5, 0.0, 0.0, -0.5, 0.5, 0.5, 1.0, 0.0, //
+            0.5, 0.5, 0.5, 1.0, 0.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, -0.5, -0.5, 0.0, 1.0, 0.5, -0.5, -0.5, 0.0, 1.0,
+            0.5, -0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.0, //
+            -0.5, -0.5, -0.5, 0.0, 1.0, 0.5, -0.5, -0.5, 1.0, 1.0, 0.5, -0.5, 0.5, 1.0, 0.0, 0.5, -0.5, 0.5, 1.0, 0.0,
+            -0.5, -0.5, 0.5, 0.0, 0.0, -0.5, -0.5, -0.5, 0.0, 1.0, //
+            -0.5, 0.5, -0.5, 0.0, 1.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, 0.5, 0.5, 1.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.0,
+            -0.5, 0.5, 0.5, 0.0, 0.0, -0.5, 0.5, -0.5, 0.0, 1.0,
         ]);
 
         let cube_pos: [Vector3<f32>; 10] = [
@@ -120,7 +87,7 @@ pub fn main_1_7_4() {
             vec3(1.3, -2.0, -2.5),
             vec3(1.5, 2.0, -2.5),
             vec3(1.5, 0.2, -1.5),
-            vec3(-1.3, 1.0, -1.5)
+            vec3(-1.3, 1.0, -1.5),
         ];
 
         // texture
@@ -136,7 +103,9 @@ pub fn main_1_7_4() {
         let loc_view = gl::GetUniformLocation(shader.id, c_str!("view").as_ptr());
         let loc_proj = gl::GetUniformLocation(shader.id, c_str!("projection").as_ptr());
 
-        (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj)
+        (
+            shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj,
+        )
     };
 
     // render loop
@@ -150,12 +119,7 @@ pub fn main_1_7_4() {
 
         // events
         // -----
-        process_events(&events,
-                       &mut first_mouse,
-                       &mut last_x,
-                       &mut last_y,
-                       &mut camera,
-        );
+        process_events(&events, &mut first_mouse, &mut last_x, &mut last_y, &mut camera);
 
         // input
         // -----
@@ -173,7 +137,8 @@ pub fn main_1_7_4() {
             shader.use_program();
 
             // projection matrix
-            let projection: Matrix4<f32> = perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
+            let projection: Matrix4<f32> =
+                perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
             gl::UniformMatrix4fv(loc_proj, 1, gl::FALSE, projection.as_ptr());
 
             // camera/view transformation

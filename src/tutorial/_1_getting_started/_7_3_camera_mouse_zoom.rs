@@ -14,11 +14,7 @@ use crate::tutorial::{TutorialTexture, TutorialGeometry};
 const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
-const CAMERA_UP: Vector3<f32> = Vector3 {
-    x: 0.0,
-    y: 1.0,
-    z: 0.0,
-};
+const CAMERA_UP: Vector3<f32> = Vector3 { x: 0.0, y: 1.0, z: 0.0 };
 
 pub fn main_1_7_3() {
     let mut camera_pos = Point3::new(0.0, 0.0, 3.0);
@@ -44,11 +40,12 @@ pub fn main_1_7_3() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -74,52 +71,18 @@ pub fn main_1_7_3() {
 
         let geometry = TutorialGeometry::new_xyzuv(vec![
             //
-            -0.5, -0.5, -0.5, 0.0, 0.0,
-            0.5, -0.5, -0.5, 1.0, 0.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            -0.5, 0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 0.0,
-
-            //
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 1.0,
-            0.5, 0.5, 0.5, 1.0, 1.0,
-            -0.5, 0.5, 0.5, 0.0, 1.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-
-            //
-            -0.5, 0.5, 0.5, 1.0, 0.0,
-            -0.5, 0.5, -0.5, 1.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            -0.5, 0.5, 0.5, 1.0, 0.0,
-
-            //
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, 0.5, 0.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-
-            //
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-            0.5, -0.5, -0.5, 1.0, 1.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            0.5, -0.5, 0.5, 1.0, 0.0,
-            -0.5, -0.5, 0.5, 0.0, 0.0,
-            -0.5, -0.5, -0.5, 0.0, 1.0,
-
-            //
-            -0.5, 0.5, -0.5, 0.0, 1.0,
-            0.5, 0.5, -0.5, 1.0, 1.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            0.5, 0.5, 0.5, 1.0, 0.0,
-            -0.5, 0.5, 0.5, 0.0, 0.0,
-            -0.5, 0.5, -0.5, 0.0, 1.0
+            -0.5, -0.5, -0.5, 0.0, 0.0, 0.5, -0.5, -0.5, 1.0, 0.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, 0.5, -0.5, 1.0, 1.0,
+            -0.5, 0.5, -0.5, 0.0, 1.0, -0.5, -0.5, -0.5, 0.0, 0.0, //
+            -0.5, -0.5, 0.5, 0.0, 0.0, 0.5, -0.5, 0.5, 1.0, 0.0, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5, 0.5, 0.5, 1.0, 1.0,
+            -0.5, 0.5, 0.5, 0.0, 1.0, -0.5, -0.5, 0.5, 0.0, 0.0, //
+            -0.5, 0.5, 0.5, 1.0, 0.0, -0.5, 0.5, -0.5, 1.0, 1.0, -0.5, -0.5, -0.5, 0.0, 1.0, -0.5, -0.5, -0.5, 0.0,
+            1.0, -0.5, -0.5, 0.5, 0.0, 0.0, -0.5, 0.5, 0.5, 1.0, 0.0, //
+            0.5, 0.5, 0.5, 1.0, 0.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, -0.5, -0.5, 0.0, 1.0, 0.5, -0.5, -0.5, 0.0, 1.0,
+            0.5, -0.5, 0.5, 0.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.0, //
+            -0.5, -0.5, -0.5, 0.0, 1.0, 0.5, -0.5, -0.5, 1.0, 1.0, 0.5, -0.5, 0.5, 1.0, 0.0, 0.5, -0.5, 0.5, 1.0, 0.0,
+            -0.5, -0.5, 0.5, 0.0, 0.0, -0.5, -0.5, -0.5, 0.0, 1.0, //
+            -0.5, 0.5, -0.5, 0.0, 1.0, 0.5, 0.5, -0.5, 1.0, 1.0, 0.5, 0.5, 0.5, 1.0, 0.0, 0.5, 0.5, 0.5, 1.0, 0.0,
+            -0.5, 0.5, 0.5, 0.0, 0.0, -0.5, 0.5, -0.5, 0.0, 1.0,
         ]);
 
         let cube_pos: [Vector3<f32>; 10] = [
@@ -132,7 +95,7 @@ pub fn main_1_7_3() {
             vec3(1.3, -2.0, -2.5),
             vec3(1.5, 2.0, -2.5),
             vec3(1.5, 0.2, -1.5),
-            vec3(-1.3, 1.0, -1.5)
+            vec3(-1.3, 1.0, -1.5),
         ];
 
         // texture
@@ -148,7 +111,9 @@ pub fn main_1_7_3() {
         let loc_view = gl::GetUniformLocation(shader.id, c_str!("view").as_ptr());
         let loc_proj = gl::GetUniformLocation(shader.id, c_str!("projection").as_ptr());
 
-        (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj)
+        (
+            shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj,
+        )
     };
 
     // render loop
@@ -162,14 +127,16 @@ pub fn main_1_7_3() {
 
         // events
         // -----
-        _process_events(&events,
-                        &mut first_mouse,
-                        &mut last_x,
-                        &mut last_y,
-                        &mut yaw,
-                        &mut pitch,
-                        &mut camera_front,
-                        &mut fov);
+        _process_events(
+            &events,
+            &mut first_mouse,
+            &mut last_x,
+            &mut last_y,
+            &mut yaw,
+            &mut pitch,
+            &mut camera_front,
+            &mut fov,
+        );
 
         // input
         // -----
@@ -211,14 +178,16 @@ pub fn main_1_7_3() {
     }
 }
 
-fn _process_events(events: &Receiver<(f64, glfw::WindowEvent)>,
-                   first_mouse: &mut bool,
-                   last_x: &mut f32,
-                   last_y: &mut f32,
-                   yaw: &mut f32,
-                   pitch: &mut f32,
-                   camera_front: &mut Vector3<f32>,
-                   fov: &mut f32) {
+fn _process_events(
+    events: &Receiver<(f64, glfw::WindowEvent)>,
+    first_mouse: &mut bool,
+    last_x: &mut f32,
+    last_y: &mut f32,
+    yaw: &mut f32,
+    pitch: &mut f32,
+    camera_front: &mut Vector3<f32>,
+    fov: &mut f32,
+) {
     for (_, event) in glfw::flush_messages(events) {
         match event {
             glfw::WindowEvent::FramebufferSize(width, height) => {
@@ -276,7 +245,12 @@ fn _process_events(events: &Receiver<(f64, glfw::WindowEvent)>,
     }
 }
 
-fn _process_input(window: &mut glfw::Window, delta_time: f32, camera_pos: &mut Point3<f32>, camera_front: &mut Vector3<f32>) {
+fn _process_input(
+    window: &mut glfw::Window,
+    delta_time: f32,
+    camera_pos: &mut Point3<f32>,
+    camera_front: &mut Vector3<f32>,
+) {
     if window.get_key(Key::Escape) == Action::Press {
         window.set_should_close(true);
     }

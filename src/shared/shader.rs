@@ -22,11 +22,16 @@ impl Shader {
         let mut shader = Shader { id: 0 };
         // 1. retrieve the vertex/fragment source code from filesystem
         let mut v_shader_file = File::open(vertex_path).unwrap_or_else(|_| panic!("Failed to open {}", vertex_path));
-        let mut f_shader_file = File::open(fragment_path).unwrap_or_else(|_| panic!("Failed to open {}", fragment_path));
+        let mut f_shader_file =
+            File::open(fragment_path).unwrap_or_else(|_| panic!("Failed to open {}", fragment_path));
         let mut vertex_code = String::new();
         let mut fragment_code = String::new();
-        v_shader_file.read_to_string(&mut vertex_code).expect("Failed to read vertex shader");
-        f_shader_file.read_to_string(&mut fragment_code).expect("Failed to read fragment shader");
+        v_shader_file
+            .read_to_string(&mut vertex_code)
+            .expect("Failed to read vertex shader");
+        f_shader_file
+            .read_to_string(&mut fragment_code)
+            .expect("Failed to read fragment shader");
 
         let v_shader_code = CString::new(vertex_code.as_bytes()).unwrap();
         let f_shader_code = CString::new(fragment_code.as_bytes()).unwrap();
@@ -87,7 +92,12 @@ impl Shader {
     }
     /// ------------------------------------------------------------------------
     pub unsafe fn set_mat4(&self, name: &CStr, mat: &Matrix4<f32>) {
-        gl::UniformMatrix4fv(gl::GetUniformLocation(self.id, name.as_ptr()), 1, gl::FALSE, mat.as_ptr());
+        gl::UniformMatrix4fv(
+            gl::GetUniformLocation(self.id, name.as_ptr()),
+            1,
+            gl::FALSE,
+            mat.as_ptr(),
+        );
     }
 
     /// utility function for checking shader compilation/linking errors.
@@ -100,12 +110,11 @@ impl Shader {
     pub fn with_geometry_shader(vertex_path: &str, fragment_path: &str, geometry_path: &str) -> Self {
         let mut shader = Shader { id: 0 };
         // 1. retrieve the vertex/fragment source code from filesystem
-        let mut v_shader_file = File::open(vertex_path)
-            .unwrap_or_else(|_| panic!("Failed to open {}", vertex_path));
-        let mut f_shader_file = File::open(fragment_path)
-            .unwrap_or_else(|_| panic!("Failed to open {}", fragment_path));
-        let mut g_shader_file = File::open(geometry_path)
-            .unwrap_or_else(|_| panic!("Failed to open {}", geometry_path));
+        let mut v_shader_file = File::open(vertex_path).unwrap_or_else(|_| panic!("Failed to open {}", vertex_path));
+        let mut f_shader_file =
+            File::open(fragment_path).unwrap_or_else(|_| panic!("Failed to open {}", fragment_path));
+        let mut g_shader_file =
+            File::open(geometry_path).unwrap_or_else(|_| panic!("Failed to open {}", geometry_path));
         let mut vertex_code = String::new();
         let mut fragment_code = String::new();
         let mut geometry_code = String::new();
@@ -167,19 +176,23 @@ pub unsafe fn check_compile_errors(shader: u32, type_: &str) {
         gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut success);
         if success != gl::TRUE as GLint {
             gl::GetShaderInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-            println!("ERROR::SHADER_COMPILATION_ERROR of type: {}\n{}\n \
+            println!(
+                "ERROR::SHADER_COMPILATION_ERROR of type: {}\n{}\n \
                           -- --------------------------------------------------- -- ",
-                     type_,
-                     str::from_utf8(&info_log).unwrap());
+                type_,
+                str::from_utf8(&info_log).unwrap()
+            );
         }
     } else {
         gl::GetProgramiv(shader, gl::LINK_STATUS, &mut success);
         if success != gl::TRUE as GLint {
             gl::GetProgramInfoLog(shader, 1024, ptr::null_mut(), info_log.as_mut_ptr() as *mut GLchar);
-            println!("ERROR::PROGRAM_LINKING_ERROR of type: {}\n{}\n \
+            println!(
+                "ERROR::PROGRAM_LINKING_ERROR of type: {}\n{}\n \
                           -- --------------------------------------------------- -- ",
-                     type_,
-                     str::from_utf8(&info_log).unwrap());
+                type_,
+                str::from_utf8(&info_log).unwrap()
+            );
         }
     }
 }

@@ -35,11 +35,12 @@ pub fn main_2_1() {
     glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
     glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
     #[cfg(target_os = "macos")]
-        glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
+    glfw.window_hint(glfw::WindowHint::OpenGlForwardCompat(true));
 
     // glfw window creation
     // --------------------
-    let (mut window, events) = glfw.create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
+    let (mut window, events) = glfw
+        .create_window(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window");
 
     window.make_current();
@@ -55,12 +56,7 @@ pub fn main_2_1() {
     // ---------------------------------------
     gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
 
-    let (
-        light_shader,
-        lamp_shader,
-        cube,
-        light,
-    ) = unsafe {
+    let (light_shader, lamp_shader, cube, light) = unsafe {
         // configure global opengl state
         gl::Enable(gl::DEPTH_TEST);
 
@@ -78,47 +74,17 @@ pub fn main_2_1() {
         // setup vertex data
         // -----------------
         let vertices = vec![
-            -0.5, -0.5, -0.5,
-            0.5, -0.5, -0.5,
-            0.5, 0.5, -0.5,
-            0.5, 0.5, -0.5,
-            -0.5, 0.5, -0.5,
-            -0.5, -0.5, -0.5,
+            -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5,
             //
-            -0.5, -0.5, 0.5,
-            0.5, -0.5, 0.5,
-            0.5, 0.5, 0.5,
-            0.5, 0.5, 0.5,
-            -0.5, 0.5, 0.5,
-            -0.5, -0.5, 0.5,
+            -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5,
             //
-            -0.5, 0.5, 0.5,
-            -0.5, 0.5, -0.5,
-            -0.5, -0.5, -0.5,
-            -0.5, -0.5, -0.5,
-            -0.5, -0.5, 0.5,
-            -0.5, 0.5, 0.5,
+            -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5,
             //
-            0.5, 0.5, 0.5,
-            0.5, 0.5, -0.5,
-            0.5, -0.5, -0.5,
-            0.5, -0.5, -0.5,
-            0.5, -0.5, 0.5,
-            0.5, 0.5, 0.5,
+            0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5,
             //
-            -0.5, -0.5, -0.5,
-            0.5, -0.5, -0.5,
-            0.5, -0.5, 0.5,
-            0.5, -0.5, 0.5,
-            -0.5, -0.5, 0.5,
-            -0.5, -0.5, -0.5,
+            -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5,
             //
-            -0.5, 0.5, -0.5,
-            0.5, 0.5, -0.5,
-            0.5, 0.5, 0.5,
-            0.5, 0.5, 0.5,
-            -0.5, 0.5, 0.5,
-            -0.5, 0.5, -0.5,
+            -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5,
         ];
         let cube = TutorialGeometry::new_xyz(vertices.clone());
         let light = TutorialGeometry::new_xyz(vertices.clone());
@@ -137,12 +103,7 @@ pub fn main_2_1() {
 
         // events
         // -----
-        process_events(&events,
-                       &mut first_mouse,
-                       &mut last_x,
-                       &mut last_y,
-                       &mut camera,
-        );
+        process_events(&events, &mut first_mouse, &mut last_x, &mut last_y, &mut camera);
 
         // input
         // -----
@@ -159,7 +120,8 @@ pub fn main_2_1() {
             light_shader.set_vec3(c_str!("lightColor"), 1.0, 1.0, 1.0);
 
             // projection matrix
-            let projection: Matrix4<f32> = perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
+            let projection: Matrix4<f32> =
+                perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
             let view = camera.get_view_matrix();
             light_shader.set_mat4(c_str!("projection"), &projection);
             light_shader.set_mat4(c_str!("view"), &view);

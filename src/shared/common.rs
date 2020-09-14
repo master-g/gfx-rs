@@ -13,11 +13,13 @@ use crate::camera::CameraMovement::*;
 
 /// Event processing function as introduced in 1.7.4 (Camera Class) and used in
 /// most later tutorials
-pub fn process_events(events: &Receiver<(f64, glfw::WindowEvent)>,
-                      first_mouse: &mut bool,
-                      last_x: &mut f32,
-                      last_y: &mut f32,
-                      camera: &mut Camera) {
+pub fn process_events(
+    events: &Receiver<(f64, glfw::WindowEvent)>,
+    first_mouse: &mut bool,
+    last_x: &mut f32,
+    last_y: &mut f32,
+    camera: &mut Camera,
+) {
     for (_, event) in glfw::flush_messages(events) {
         match event {
             glfw::WindowEvent::FramebufferSize(width, height) => {
@@ -84,8 +86,17 @@ pub unsafe fn load_texture(path: &str) -> u32 {
     let data = img.to_bytes();
 
     gl::BindTexture(gl::TEXTURE_2D, texture_id);
-    gl::TexImage2D(gl::TEXTURE_2D, 0, format as i32, img.width() as i32, img.height() as i32,
-                   0, format, gl::UNSIGNED_BYTE, &data[0] as *const u8 as *const c_void);
+    gl::TexImage2D(
+        gl::TEXTURE_2D,
+        0,
+        format as i32,
+        img.width() as i32,
+        img.height() as i32,
+        0,
+        format,
+        gl::UNSIGNED_BYTE,
+        &data[0] as *const u8 as *const c_void,
+    );
     gl::GenerateMipmap(gl::TEXTURE_2D);
 
     gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::REPEAT as i32);

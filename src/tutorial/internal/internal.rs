@@ -46,12 +46,21 @@ impl TutorialGeometry {
         gl::BindVertexArray(vao);
         // 2. bind and set vertex buffer(s)
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-        gl::BufferData(gl::ARRAY_BUFFER,
-                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &vertices[0] as *const f32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ARRAY_BUFFER,
+            (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &vertices[0] as *const f32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
         // 3. configure vertex attributes(s).
-        gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, 3 * mem::size_of::<GLfloat>() as GLsizei, ptr::null());
+        gl::VertexAttribPointer(
+            0,
+            3,
+            gl::FLOAT,
+            gl::FALSE,
+            3 * mem::size_of::<GLfloat>() as GLsizei,
+            ptr::null(),
+        );
         gl::EnableVertexAttribArray(0);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -80,17 +89,26 @@ impl TutorialGeometry {
         gl::BindVertexArray(vao);
         // 2. bind and set vertex buffer(s)
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-        gl::BufferData(gl::ARRAY_BUFFER,
-                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &vertices[0] as *const f32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ARRAY_BUFFER,
+            (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &vertices[0] as *const f32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
         // 3. configure vertex attributes(s).
         let stride = 6 * mem::size_of::<GLfloat>() as GLsizei;
         // position
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // color / normal
-        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::VertexAttribPointer(
+            1,
+            3,
+            gl::FLOAT,
+            gl::FALSE,
+            stride,
+            (3 * mem::size_of::<GLfloat>()) as *const c_void,
+        );
         gl::EnableVertexAttribArray(1);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -119,17 +137,26 @@ impl TutorialGeometry {
         gl::BindVertexArray(vao);
         // 2. bind and set vertex buffer(s)
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-        gl::BufferData(gl::ARRAY_BUFFER,
-                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &vertices[0] as *const f32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ARRAY_BUFFER,
+            (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &vertices[0] as *const f32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
         // 3. configure vertex attributes(s).
         let stride = 5 * mem::size_of::<GLfloat>() as GLsizei;
         // position
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // texture coordinates
-        gl::VertexAttribPointer(1, 2, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::VertexAttribPointer(
+            1,
+            2,
+            gl::FLOAT,
+            gl::FALSE,
+            stride,
+            (3 * mem::size_of::<GLfloat>()) as *const c_void,
+        );
         gl::EnableVertexAttribArray(1);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -160,16 +187,20 @@ impl TutorialGeometry {
         gl::BindVertexArray(vao);
         // 2. bind and set vertex buffer(s)
         gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-        gl::BufferData(gl::ARRAY_BUFFER,
-                       (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &vertices[0] as *const f32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ARRAY_BUFFER,
+            (vertices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &vertices[0] as *const f32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
         // 3. indices
         gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, ebo);
-        gl::BufferData(gl::ELEMENT_ARRAY_BUFFER,
-                       (indices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
-                       &indices[0] as *const i32 as *const c_void,
-                       gl::STATIC_DRAW);
+        gl::BufferData(
+            gl::ELEMENT_ARRAY_BUFFER,
+            (indices.len() * mem::size_of::<GLfloat>()) as GLsizeiptr,
+            &indices[0] as *const i32 as *const c_void,
+            gl::STATIC_DRAW,
+        );
 
         // 4. configure vertex attributes(s).
         let stride = 8 * mem::size_of::<GLfloat>() as GLsizei;
@@ -177,10 +208,24 @@ impl TutorialGeometry {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // color
-        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::VertexAttribPointer(
+            1,
+            3,
+            gl::FLOAT,
+            gl::FALSE,
+            stride,
+            (3 * mem::size_of::<GLfloat>()) as *const c_void,
+        );
         gl::EnableVertexAttribArray(1);
         // texture coord
-        gl::VertexAttribPointer(2, 2, gl::FLOAT, gl::FALSE, stride, (6 * mem::size_of::<GLfloat>()) as *const c_void);
+        gl::VertexAttribPointer(
+            2,
+            2,
+            gl::FLOAT,
+            gl::FALSE,
+            stride,
+            (6 * mem::size_of::<GLfloat>()) as *const c_void,
+        );
         gl::EnableVertexAttribArray(2);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -249,9 +294,7 @@ impl TutorialShader {
         gl::DeleteShader(vs);
         gl::DeleteShader(fs);
 
-        TutorialShader {
-            prog,
-        }
+        TutorialShader { prog }
     }
 
     pub unsafe fn use_prog(&self) {
@@ -302,21 +345,20 @@ impl TutorialTexture {
             img.flipv();
         }
         let data = img.to_bytes();
-        gl::TexImage2D(gl::TEXTURE_2D,
-                       0,
-                       gl::RGB as i32,
-                       img.width() as i32,
-                       img.height() as i32,
-                       0,
-                       if has_alpha { gl::RGBA } else { gl::RGB },
-                       gl::UNSIGNED_BYTE,
-                       &data[0] as *const u8 as *const c_void);
+        gl::TexImage2D(
+            gl::TEXTURE_2D,
+            0,
+            gl::RGB as i32,
+            img.width() as i32,
+            img.height() as i32,
+            0,
+            if has_alpha { gl::RGBA } else { gl::RGB },
+            gl::UNSIGNED_BYTE,
+            &data[0] as *const u8 as *const c_void,
+        );
         gl::GenerateMipmap(gl::TEXTURE_2D);
 
-        Self {
-            tex,
-            unit,
-        }
+        Self { tex, unit }
     }
 
     pub unsafe fn bind(&self) {
@@ -327,8 +369,6 @@ impl TutorialTexture {
 
 impl Drop for TutorialTexture {
     fn drop(&mut self) {
-        unsafe {
-            gl::DeleteTextures(1, &self.tex)
-        }
+        unsafe { gl::DeleteTextures(1, &self.tex) }
     }
 }
