@@ -23,8 +23,10 @@ git = "https://github.com/bjz/glfw-rs.git"
 default = [
     "chapter-1",
     "chapter-2",
-    "chapter-3"
+    "chapter-3",
+    "chapter-4"
 ]
 chapter-1 = []
 chapter-2 = []
 chapter-3 = []
+chapter-4 = []

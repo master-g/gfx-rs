@@ -1,5 +1,5 @@
-use crate::shared::{Camera, process_input, process_events, Shader, Model};
-use cgmath::{Point3, Matrix4, perspective, Deg, vec3};
+use crate::shared::{process_events, process_input, Camera, Model, Shader};
+use cgmath::{perspective, vec3, Deg, Matrix4, Point3};
 use glfw::Context;
 use std::ffi::CStr;
 
@@ -9,10 +9,7 @@ const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
 pub fn main_3_1() {
-    let mut camera = Camera {
-        position: Point3::new(0.0, 0.0, 3.0),
-        ..Camera::default()
-    };
+    let mut camera = Camera { position: Point3::new(0.0, 0.0, 3.0), ..Camera::default() };
 
     let mut first_mouse = true;
     let mut last_x = SCR_WIDTH as f32 / 2.0;

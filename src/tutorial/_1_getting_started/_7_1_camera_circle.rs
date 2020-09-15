@@ -2,12 +2,12 @@
 
 use std::ffi::CStr;
 
-use cgmath::{Deg, InnerSpace, Matrix, Matrix4, perspective, Point3, vec3, Vector3};
+use cgmath::{perspective, vec3, Deg, InnerSpace, Matrix, Matrix4, Point3, Vector3};
 use glfw::Context;
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{process_events, TutorialTexture, TutorialGeometry};
+use crate::tutorial::{process_events, TutorialGeometry, TutorialTexture};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -113,11 +113,8 @@ pub fn main_1_7_1() {
             let radius: f32 = 10.0;
             let cam_x = glfw.get_time().sin() as f32 * radius;
             let cam_z = glfw.get_time().cos() as f32 * radius;
-            let view: Matrix4<f32> = Matrix4::look_at(
-                Point3::new(cam_x, 0.0, cam_z),
-                Point3::new(0.0, 0.0, 0.0),
-                vec3(0.0, 1.0, 0.0),
-            );
+            let view: Matrix4<f32> =
+                Matrix4::look_at(Point3::new(cam_x, 0.0, cam_z), Point3::new(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
             gl::UniformMatrix4fv(loc_view, 1, gl::FALSE, &view[0][0]);
 
             for (i, position) in cube_pos.iter().enumerate() {

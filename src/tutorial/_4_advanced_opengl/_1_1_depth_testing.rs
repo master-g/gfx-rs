@@ -1,5 +1,5 @@
-use crate::shared::{Camera, process_input, process_events, Shader, Model, load_texture};
-use cgmath::{Point3, Matrix4, perspective, Deg, vec3};
+use crate::shared::{load_texture, process_events, process_input, Camera, Shader};
+use cgmath::{perspective, vec3, Deg, Matrix4, Point3, SquareMatrix};
 use glfw::Context;
 use std::ffi::CStr;
 
@@ -11,10 +11,7 @@ const SCR_WIDTH: u32 = 1280;
 const SCR_HEIGHT: u32 = 720;
 
 pub fn main_4_1_1() {
-    let mut camera = Camera {
-        Position: Point3::new(0.0, 0.0, 3.0),
-        ..Camera::default()
-    };
+    let mut camera = Camera { position: Point3::new(0.0, 0.0, 3.0), ..Camera::default() };
 
     let mut first_mouse = true;
     let mut last_x: f32 = SCR_WIDTH as f32 / 2.0;
@@ -124,6 +121,32 @@ pub fn main_4_1_1() {
             gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
 
             shader.use_program();
+            let model: Matrix4<f32>;
+            let view = camera.get_view_matrix();
+            let projection: Matrix4<f32> =
+                perspective(Deg(camera.zoom), SCR_WIDTH as f32 / SCR_HEIGHT as f32, 0.1, 100.0);
+            shader.set_mat4(c_str!("view"), &view);
+            shader.set_mat4(c_str!("projection"), &projection);
+            // cubes
+            cube.bind();
+            gl::ActiveTexture(gl::TEXTURE0);
+            gl::BindTexture(gl::TEXTURE_2D, cube_texture);
+            model = Matrix4::from_translation(vec3(-1.0, 0.0, -1.0));
+            shader.set_mat4(c_str!("model"), &model);
+            cube.draw();
+            // floor
+            plane.bind();
+            gl::BindTexture(gl::TEXTURE_2D, floor_texture);
+            shader.set_mat4(c_str!("model"), &Matrix4::identity());
+            plane.draw()
         }
+
+        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        // -------------------------------------------------------------------------------
+        window.swap_buffers();
+        glfw.poll_events();
     }
+
+    // optional: de-allocate all resources once they've outlived their purpose:
+    // ------------------------------------------------------------------------
 }

@@ -5,8 +5,8 @@ use std::mem::size_of;
 use std::os::raw::c_void;
 use std::ptr;
 
-use cgmath::{Vector2, Vector3};
 use cgmath::prelude::*;
+use cgmath::{Vector2, Vector3};
 
 use crate::shared::Shader;
 
@@ -60,14 +60,7 @@ pub struct Mesh {
 
 impl Mesh {
     pub fn new(vertices: Vec<Vertex>, indices: Vec<u32>, textures: Vec<Texture>) -> Mesh {
-        let mut mesh = Mesh {
-            vertices,
-            indices,
-            textures,
-            vao: 0,
-            vbo: 0,
-            ebo: 0,
-        };
+        let mut mesh = Mesh { vertices, indices, textures, vao: 0, vbo: 0, ebo: 0 };
 
         // now that we have all the required data, set the vertex buffers and its attribute pointers.
         unsafe { mesh.setup_mesh() }
@@ -145,54 +138,19 @@ impl Mesh {
         let size = size_of::<Vertex>() as i32;
         // vertex positions
         gl::EnableVertexAttribArray(0);
-        gl::VertexAttribPointer(
-            0,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            size,
-            offset_of!(Vertex, position) as *const c_void,
-        );
+        gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, size, offset_of!(Vertex, position) as *const c_void);
         // vertex normals
         gl::EnableVertexAttribArray(1);
-        gl::VertexAttribPointer(
-            1,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            size,
-            offset_of!(Vertex, normal) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, size, offset_of!(Vertex, normal) as *const c_void);
         // vertex texture coords
         gl::EnableVertexAttribArray(2);
-        gl::VertexAttribPointer(
-            2,
-            2,
-            gl::FLOAT,
-            gl::FALSE,
-            size,
-            offset_of!(Vertex, tex_coords) as *const c_void,
-        );
+        gl::VertexAttribPointer(2, 2, gl::FLOAT, gl::FALSE, size, offset_of!(Vertex, tex_coords) as *const c_void);
         // vertex tangent
         gl::EnableVertexAttribArray(3);
-        gl::VertexAttribPointer(
-            3,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            size,
-            offset_of!(Vertex, tangent) as *const c_void,
-        );
+        gl::VertexAttribPointer(3, 3, gl::FLOAT, gl::FALSE, size, offset_of!(Vertex, tangent) as *const c_void);
         // vertex bitangent
         gl::EnableVertexAttribArray(4);
-        gl::VertexAttribPointer(
-            4,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            size,
-            offset_of!(Vertex, bitangent) as *const c_void,
-        );
+        gl::VertexAttribPointer(4, 3, gl::FLOAT, gl::FALSE, size, offset_of!(Vertex, bitangent) as *const c_void);
 
         gl::BindVertexArray(0);
     }

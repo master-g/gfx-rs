@@ -107,14 +107,7 @@ pub fn main_1_2_3() {
             gl::STATIC_DRAW,
         );
 
-        gl::VertexAttribPointer(
-            0,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            3 * mem::size_of::<GLfloat>() as GLsizei,
-            ptr::null(),
-        );
+        gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, 3 * mem::size_of::<GLfloat>() as GLsizei, ptr::null());
         gl::EnableVertexAttribArray(0);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind

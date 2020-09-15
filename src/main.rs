@@ -80,6 +80,10 @@ fn main() {
         #[cfg(feature = "chapter-3")]
         "3_1" => main_3_1(),
 
+        #[cfg(feature = "chapter-4")]
+        "4_1_1" => main_4_1_1(),
+        "4_1_2" => main_4_1_2(),
+
         _ => println!("unknown tutorial id"),
     }
 }

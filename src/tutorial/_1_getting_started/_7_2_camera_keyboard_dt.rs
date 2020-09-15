@@ -3,23 +3,19 @@
 use std::ffi::CStr;
 use std::sync::mpsc::Receiver;
 
-use cgmath::{Deg, InnerSpace, Matrix, Matrix4, perspective, Point3, vec3, Vector3};
+use cgmath::{perspective, vec3, Deg, InnerSpace, Matrix, Matrix4, Point3, Vector3};
 use glfw::{Action, Context, Key};
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{TutorialTexture, TutorialGeometry};
+use crate::tutorial::{TutorialGeometry, TutorialTexture};
 
 // settings
 const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
 // camera
-const CAMERA_FRONT: Vector3<f32> = Vector3 {
-    x: 0.0,
-    y: 0.0,
-    z: -1.0,
-};
+const CAMERA_FRONT: Vector3<f32> = Vector3 { x: 0.0, y: 0.0, z: -1.0 };
 
 const CAMERA_UP: Vector3<f32> = Vector3 { x: 0.0, y: 1.0, z: 0.0 };
 

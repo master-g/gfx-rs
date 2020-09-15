@@ -5,22 +5,19 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-use cgmath::{Deg, Matrix4, perspective, Point3, SquareMatrix, vec3};
+use cgmath::{perspective, vec3, Deg, Matrix4, Point3, SquareMatrix};
 use gl::types::*;
 use glfw::Context;
 
 use crate::c_str;
-use crate::shared::{Camera, process_events, process_input, Shader};
+use crate::shared::{process_events, process_input, Camera, Shader};
 
 // settings
 const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
 pub fn main_2_2_1() {
-    let mut camera = Camera {
-        position: Point3::new(0.0, 0.0, 3.0),
-        ..Camera::default()
-    };
+    let mut camera = Camera { position: Point3::new(0.0, 0.0, 3.0), ..Camera::default() };
 
     let mut first_mouse = true;
     let mut last_x: f32 = SCR_WIDTH as f32 / 2.0;
@@ -110,14 +107,7 @@ pub fn main_2_2_1() {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // normal attribute
-        gl::VertexAttribPointer(
-            1,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (3 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
 
         let mut light_vao = 0;

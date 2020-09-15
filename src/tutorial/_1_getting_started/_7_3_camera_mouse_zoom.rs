@@ -3,12 +3,12 @@
 use std::ffi::CStr;
 use std::sync::mpsc::Receiver;
 
-use cgmath::{Deg, InnerSpace, Matrix, Matrix4, perspective, Point3, vec3, Vector3};
+use cgmath::{perspective, vec3, Deg, InnerSpace, Matrix, Matrix4, Point3, Vector3};
 use glfw::{Action, Context, Key};
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{TutorialTexture, TutorialGeometry};
+use crate::tutorial::{TutorialGeometry, TutorialTexture};
 
 // settings
 const SCR_WIDTH: u32 = 800;
@@ -18,11 +18,7 @@ const CAMERA_UP: Vector3<f32> = Vector3 { x: 0.0, y: 1.0, z: 0.0 };
 
 pub fn main_1_7_3() {
     let mut camera_pos = Point3::new(0.0, 0.0, 3.0);
-    let mut camera_front: Vector3<f32> = Vector3 {
-        x: 0.0,
-        y: 0.0,
-        z: -1.0,
-    };
+    let mut camera_front: Vector3<f32> = Vector3 { x: 0.0, y: 0.0, z: -1.0 };
 
     let mut first_mouse = true;
     let mut yaw: f32 = -90.0;
@@ -111,9 +107,7 @@ pub fn main_1_7_3() {
         let loc_view = gl::GetUniformLocation(shader.id, c_str!("view").as_ptr());
         let loc_proj = gl::GetUniformLocation(shader.id, c_str!("projection").as_ptr());
 
-        (
-            shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj,
-        )
+        (shader, geometry, cube_pos, texture1, texture2, loc_model, loc_view, loc_proj)
     };
 
     // render loop

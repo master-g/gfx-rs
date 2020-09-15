@@ -5,8 +5,8 @@ use std::path::Path;
 use std::sync::mpsc::Receiver;
 
 use glfw::{Action, Key};
-use image::{DynamicImage, GenericImageView};
 use image::DynamicImage::*;
+use image::{DynamicImage, GenericImageView};
 
 use crate::camera::Camera;
 use crate::camera::CameraMovement::*;

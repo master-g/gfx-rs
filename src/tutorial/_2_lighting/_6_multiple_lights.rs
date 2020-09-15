@@ -5,22 +5,19 @@ use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
 
-use cgmath::{Deg, Matrix4, perspective, Point3, SquareMatrix, vec3, EuclideanSpace, Vector3, InnerSpace};
+use cgmath::{perspective, vec3, Deg, EuclideanSpace, InnerSpace, Matrix4, Point3, SquareMatrix, Vector3};
 use gl::types::*;
 use glfw::Context;
 
 use crate::c_str;
-use crate::shared::{Camera, process_events, process_input, Shader, load_texture};
+use crate::shared::{load_texture, process_events, process_input, Camera, Shader};
 
 // settings
 const SCR_WIDTH: u32 = 480;
 const SCR_HEIGHT: u32 = 320;
 
 pub fn main_2_6() {
-    let mut camera = Camera {
-        position: Point3::new(0.0, 0.0, 3.0),
-        ..Camera::default()
-    };
+    let mut camera = Camera { position: Point3::new(0.0, 0.0, 3.0), ..Camera::default() };
 
     let mut first_mouse = true;
     let mut last_x: f32 = SCR_WIDTH as f32 / 2.0;
@@ -66,10 +63,8 @@ pub fn main_2_6() {
             "src/tutorial/_2_lighting/shaders/6.multiple_lights.vsh",
             "src/tutorial/_2_lighting/shaders/6.multiple_lights.fsh",
         );
-        let lamp_shader = Shader::new(
-            "src/tutorial/_2_lighting/shaders/6.lamp.vsh",
-            "src/tutorial/_2_lighting/shaders/6.lamp.fsh",
-        );
+        let lamp_shader =
+            Shader::new("src/tutorial/_2_lighting/shaders/6.lamp.vsh", "src/tutorial/_2_lighting/shaders/6.lamp.fsh");
 
         // setup vertex data
         // -----------------
@@ -108,12 +103,8 @@ pub fn main_2_6() {
             vec3(-1.3, 1.0, -1.5),
         ];
 
-        let point_light_pos: [Vector3<f32>; 4] = [
-            vec3(0.7, 0.2, 2.0),
-            vec3(2.3, -3.3, -4.0),
-            vec3(-4.0, 2.0, -12.0),
-            vec3(0.0, 0.0, -3.0),
-        ];
+        let point_light_pos: [Vector3<f32>; 4] =
+            [vec3(0.7, 0.2, 2.0), vec3(2.3, -3.3, -4.0), vec3(-4.0, 2.0, -12.0), vec3(0.0, 0.0, -3.0)];
 
         let (mut vbo, mut cube_vao) = (0, 0);
         gl::GenVertexArrays(1, &mut cube_vao);
@@ -134,24 +125,10 @@ pub fn main_2_6() {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // normal attribute
-        gl::VertexAttribPointer(
-            1,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (3 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
         // texture coord
-        gl::VertexAttribPointer(
-            2,
-            2,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (6 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(2, 2, gl::FLOAT, gl::FALSE, stride, (6 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(2);
 
         let mut light_vao = 0;
@@ -174,17 +151,7 @@ pub fn main_2_6() {
         light_shader.set_int(c_str!("material.diffuse"), 0);
         light_shader.set_int(c_str!("material.specular"), 1);
 
-        (
-            light_shader,
-            lamp_shader,
-            vbo,
-            cube_vao,
-            light_vao,
-            diffuse_map,
-            specular_map,
-            cube_pos,
-            point_light_pos,
-        )
+        (light_shader, lamp_shader, vbo, cube_vao, light_vao, diffuse_map, specular_map, cube_pos, point_light_pos)
     };
 
     // render loop

@@ -6,8 +6,8 @@ use std::io::Read;
 use std::ptr;
 use std::str;
 
-use cgmath::{Matrix4, Vector3};
 use cgmath::prelude::*;
+use cgmath::{Matrix4, Vector3};
 use gl;
 use gl::types::*;
 
@@ -26,12 +26,8 @@ impl Shader {
             File::open(fragment_path).unwrap_or_else(|_| panic!("Failed to open {}", fragment_path));
         let mut vertex_code = String::new();
         let mut fragment_code = String::new();
-        v_shader_file
-            .read_to_string(&mut vertex_code)
-            .expect("Failed to read vertex shader");
-        f_shader_file
-            .read_to_string(&mut fragment_code)
-            .expect("Failed to read fragment shader");
+        v_shader_file.read_to_string(&mut vertex_code).expect("Failed to read vertex shader");
+        f_shader_file.read_to_string(&mut fragment_code).expect("Failed to read fragment shader");
 
         let v_shader_code = CString::new(vertex_code.as_bytes()).unwrap();
         let f_shader_code = CString::new(fragment_code.as_bytes()).unwrap();
@@ -92,12 +88,7 @@ impl Shader {
     }
     /// ------------------------------------------------------------------------
     pub unsafe fn set_mat4(&self, name: &CStr, mat: &Matrix4<f32>) {
-        gl::UniformMatrix4fv(
-            gl::GetUniformLocation(self.id, name.as_ptr()),
-            1,
-            gl::FALSE,
-            mat.as_ptr(),
-        );
+        gl::UniformMatrix4fv(gl::GetUniformLocation(self.id, name.as_ptr()), 1, gl::FALSE, mat.as_ptr());
     }
 
     /// utility function for checking shader compilation/linking errors.
@@ -118,15 +109,9 @@ impl Shader {
         let mut vertex_code = String::new();
         let mut fragment_code = String::new();
         let mut geometry_code = String::new();
-        v_shader_file
-            .read_to_string(&mut vertex_code)
-            .expect("Failed to read vertex shader");
-        f_shader_file
-            .read_to_string(&mut fragment_code)
-            .expect("Failed to read fragment shader");
-        g_shader_file
-            .read_to_string(&mut geometry_code)
-            .expect("Failed to read geometry shader");
+        v_shader_file.read_to_string(&mut vertex_code).expect("Failed to read vertex shader");
+        f_shader_file.read_to_string(&mut fragment_code).expect("Failed to read fragment shader");
+        g_shader_file.read_to_string(&mut geometry_code).expect("Failed to read geometry shader");
 
         let v_shader_code = CString::new(vertex_code.as_bytes()).unwrap();
         let f_shader_code = CString::new(fragment_code.as_bytes()).unwrap();

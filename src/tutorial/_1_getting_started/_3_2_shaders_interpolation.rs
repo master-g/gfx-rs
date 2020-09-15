@@ -4,7 +4,7 @@ use std::str;
 
 use glfw::Context;
 
-use crate::tutorial::{process_events, TutorialShader, TutorialGeometry};
+use crate::tutorial::{process_events, TutorialGeometry, TutorialShader};
 
 // settings
 const SCR_WIDTH: u32 = 800;

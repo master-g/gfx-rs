@@ -2,12 +2,12 @@
 
 use std::ffi::CStr;
 
-use cgmath::{Matrix, Matrix4, Rad, SquareMatrix, vec3};
+use cgmath::{vec3, Matrix, Matrix4, Rad, SquareMatrix};
 use glfw::Context;
 
 use crate::c_str;
 use crate::shared::Shader;
-use crate::tutorial::{process_events, TutorialTexture, TutorialGeometry};
+use crate::tutorial::{process_events, TutorialGeometry, TutorialTexture};
 
 // settings
 const SCR_WIDTH: u32 = 800;

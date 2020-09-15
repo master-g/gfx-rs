@@ -2,11 +2,11 @@
 
 use std::ffi::CStr;
 
-use cgmath::{Deg, Matrix4, perspective, Point3, SquareMatrix, vec3};
+use cgmath::{perspective, vec3, Deg, Matrix4, Point3, SquareMatrix};
 use glfw::Context;
 
 use crate::c_str;
-use crate::shared::{Camera, process_events, process_input, Shader};
+use crate::shared::{process_events, process_input, Camera, Shader};
 use crate::tutorial::TutorialGeometry;
 
 // settings
@@ -14,10 +14,7 @@ const SCR_WIDTH: u32 = 800;
 const SCR_HEIGHT: u32 = 600;
 
 pub fn main_2_1() {
-    let mut camera = Camera {
-        position: Point3::new(0.0, 0.0, 3.0),
-        ..Camera::default()
-    };
+    let mut camera = Camera { position: Point3::new(0.0, 0.0, 3.0), ..Camera::default() };
 
     let mut first_mouse = true;
     let mut last_x: f32 = SCR_WIDTH as f32 / 2.0;
@@ -66,10 +63,8 @@ pub fn main_2_1() {
             "src/tutorial/_2_lighting/shaders/1.colors.vsh",
             "src/tutorial/_2_lighting/shaders/1.colors.fsh",
         );
-        let lamp_shader = Shader::new(
-            "src/tutorial/_2_lighting/shaders/1.lamp.vsh",
-            "src/tutorial/_2_lighting/shaders/1.lamp.fsh",
-        );
+        let lamp_shader =
+            Shader::new("src/tutorial/_2_lighting/shaders/1.lamp.vsh", "src/tutorial/_2_lighting/shaders/1.lamp.fsh");
 
         // setup vertex data
         // -----------------

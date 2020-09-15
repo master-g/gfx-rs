@@ -1,10 +1,10 @@
 #![allow(dead_code)]
 
-use std::{mem, ptr};
 use std::ffi::CString;
 use std::os::raw::c_void;
 use std::path::Path;
 use std::sync::mpsc::Receiver;
+use std::{mem, ptr};
 
 use gl::types::*;
 use glfw::{Action, Key};
@@ -53,14 +53,7 @@ impl TutorialGeometry {
             gl::STATIC_DRAW,
         );
         // 3. configure vertex attributes(s).
-        gl::VertexAttribPointer(
-            0,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            3 * mem::size_of::<GLfloat>() as GLsizei,
-            ptr::null(),
-        );
+        gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, 3 * mem::size_of::<GLfloat>() as GLsizei, ptr::null());
         gl::EnableVertexAttribArray(0);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -70,13 +63,7 @@ impl TutorialGeometry {
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         gl::BindVertexArray(0);
 
-        Self {
-            vao,
-            vbo,
-            ebo: 0,
-            elements: (vertices.len() / 3) as i32,
-            primitive: gl::TRIANGLES,
-        }
+        Self { vao, vbo, ebo: 0, elements: (vertices.len() / 3) as i32, primitive: gl::TRIANGLES }
     }
 
     pub unsafe fn new_xyzrgb(vertices: Vec<f32>) -> Self {
@@ -101,14 +88,7 @@ impl TutorialGeometry {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // color / normal
-        gl::VertexAttribPointer(
-            1,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (3 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -118,13 +98,7 @@ impl TutorialGeometry {
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         gl::BindVertexArray(0);
 
-        Self {
-            vao,
-            vbo,
-            ebo: 0,
-            elements: (vertices.len() / 6) as i32,
-            primitive: gl::TRIANGLES,
-        }
+        Self { vao, vbo, ebo: 0, elements: (vertices.len() / 6) as i32, primitive: gl::TRIANGLES }
     }
 
     pub unsafe fn new_xyzuv(vertices: Vec<f32>) -> Self {
@@ -149,14 +123,7 @@ impl TutorialGeometry {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // texture coordinates
-        gl::VertexAttribPointer(
-            1,
-            2,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (3 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 2, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -166,13 +133,7 @@ impl TutorialGeometry {
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         gl::BindVertexArray(0);
 
-        Self {
-            vao,
-            vbo,
-            ebo: 0,
-            elements: (vertices.len() / 5) as i32,
-            primitive: gl::TRIANGLES,
-        }
+        Self { vao, vbo, ebo: 0, elements: (vertices.len() / 5) as i32, primitive: gl::TRIANGLES }
     }
 
     pub unsafe fn new_xyzrgbuv_indices(vertices: Vec<f32>, indices: Vec<i32>) -> Self {
@@ -208,24 +169,10 @@ impl TutorialGeometry {
         gl::VertexAttribPointer(0, 3, gl::FLOAT, gl::FALSE, stride, ptr::null());
         gl::EnableVertexAttribArray(0);
         // color
-        gl::VertexAttribPointer(
-            1,
-            3,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (3 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(1, 3, gl::FLOAT, gl::FALSE, stride, (3 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(1);
         // texture coord
-        gl::VertexAttribPointer(
-            2,
-            2,
-            gl::FLOAT,
-            gl::FALSE,
-            stride,
-            (6 * mem::size_of::<GLfloat>()) as *const c_void,
-        );
+        gl::VertexAttribPointer(2, 2, gl::FLOAT, gl::FALSE, stride, (6 * mem::size_of::<GLfloat>()) as *const c_void);
         gl::EnableVertexAttribArray(2);
 
         // note that this is allowed, the call to gl::VertexAttribPointer registered vbo as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -235,17 +182,15 @@ impl TutorialGeometry {
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         gl::BindVertexArray(0);
 
-        Self {
-            vao,
-            vbo,
-            ebo,
-            elements: indices.len() as i32,
-            primitive: gl::TRIANGLES,
-        }
+        Self { vao, vbo, ebo, elements: indices.len() as i32, primitive: gl::TRIANGLES }
     }
 
     pub unsafe fn set_primitive(&mut self, primitive: u32) {
         self.primitive = primitive;
+    }
+
+    pub unsafe fn bind(&self) {
+        gl::BindVertexArray(self.vao);
     }
 
     pub unsafe fn draw(&self) {
