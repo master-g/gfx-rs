@@ -83,6 +83,7 @@ fn main() {
         #[cfg(feature = "chapter-4")]
         "4_1_1" => main_4_1_1(),
         "4_1_2" => main_4_1_2(),
+        "4_2" => main_4_2(),
 
         _ => println!("unknown tutorial id"),
     }
