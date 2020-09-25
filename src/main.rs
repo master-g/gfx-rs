@@ -84,6 +84,7 @@ fn main() {
         "4_1_1" => main_4_1_1(),
         "4_1_2" => main_4_1_2(),
         "4_2" => main_4_2(),
+        "4_3_1" => main_4_3_1(),
 
         _ => println!("unknown tutorial id"),
     }
